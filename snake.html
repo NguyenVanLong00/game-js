@@ -1,0 +1,156 @@
+<!Doctype html>
+<html>
+<head>
+</head>
+<script src="https://code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script>
+<script>
+
+var ran = {
+x : [4,4,4,4],
+y : [3,4,5,6]
+};
+
+var moi = {
+x : [],
+y : [],
+display : false
+}
+
+$(function(){
+	window.addEventListener("keydown", function(e) { 
+		switch(e.keyCode)
+		{
+			case 37:
+				render('left');
+				break;
+			case 38:
+				render('top');
+				break;
+			case 39:
+				render('right');
+				break;
+			case 40:
+				render('down');
+		}
+	});
+	var game = $('#game');
+	var x = 0, y = 0;
+	for (var i =0; i < 100; i++)
+	{
+		game.append('<div class="item" x="'+x+'" y="'+y+'"></div>');
+		y++;
+		if (y%10 == 0 && y != 0)
+		{
+			x++;
+			y = 0;
+		}
+	}
+	render();
+});
+
+var running;
+var nho;
+function render(move)
+{
+	var dai = ran.x.length;
+	if (move){
+		if ((nho == 'right' && move == 'left') ||
+		    (nho == 'top' && move == 'down') ||
+			(nho == 'down' && move == 'top') ||
+			(nho == 'left' && move == 'right'))
+				return false;
+		nho = move;
+		clearInterval(running);
+		var xoay = ran.y.shift();
+		var xoax = ran.x.shift();
+		$('.item[x='+xoax+'][y='+xoay+']').css('background','#000');
+		running = setTimeout(function() {
+			render(move);
+		},100);
+	}
+	if (move == 'right')
+	{
+		ran.x.push(ran.x[dai-2]);
+		if(ran.y[dai-2] == 9){
+			ran.y.unshift(ran.y[0]-1);
+			ran.x.unshift(ran.x[0]);
+		}
+		if (ran.y[ran.y.length-1] == 9)
+			ran.y.push(0);
+		else
+			ran.y.push(ran.y[ran.y.length-1]+1);
+	}
+	
+	if (move == 'left')
+	{
+		ran.x.push(ran.x[dai-2]);
+		if (ran.y[ran.y.length-1] == 0)
+			ran.y.push(9);
+		else
+			ran.y.push(ran.y[ran.y.length-1]-1);
+	}
+	
+	if (move == 'top')
+	{
+		ran.y.push(ran.y[ran.x.length-1]);
+		if(ran.x[ran.x.length-1] == 0)
+			ran.x.push(9);
+		else
+			ran.x.push(ran.x[ran.x.length-1]-1);
+	}
+	
+	if (move == 'down')
+	{
+		ran.y.push(ran.y[ran.x.length-1]);
+		if(ran.x[ran.x.length-1] == 9)
+			ran.x.push(0);
+		else
+			ran.x.push(ran.x[ran.x.length-1]+1);
+	}
+	
+	for (var i = ran.x.length-1; i > -1; i--)
+	{
+		if (i == ran.x.length-1)
+			$('.item[x='+ran.x[i]+'][y='+ran.y[i]+']').css('background','gold');
+		else
+			$('.item[x='+ran.x[i]+'][y='+ran.y[i]+']').css('background','red');
+	}
+	
+	for (var i = 0; i < ran.x.length-2; i++)
+	{
+		if(ran.x[i] == ran.x[ran.x.length-1] && ran.y[i] == ran.y[ran.x.length-1])
+		{
+			alert('DIE');
+			clearInterval(running);
+		}
+	}
+}
+</script>
+<body>
+
+<style>
+#game {
+display: flex;
+flex-flow: row wrap;
+align-content: space-between;
+width: 500px;
+height: 500px;
+background: #000;
+}
+
+.item {
+width: 50px;
+height: 50px;
+background: #000;
+}
+
+.item:nth-child(9n) {
+  page-break-after: always;
+}
+</style>
+
+<div id="game"></div>
+<div id="point">Point: <span>0</span></div>
+
+</body>
+</html>

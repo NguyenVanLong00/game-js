@@ -1,0 +1,145 @@
+<!Doctype html>
+<html lang="en">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+body
+{
+background: url('https://i.ytimg.com/vi/oBVOADynUUw/maxresdefault.jpg') center fixed;
+background-size: cover;
+}
+#frame
+{
+background: #ffffff61;
+width: 610px;
+height: 600px;
+margin-top: 5rem;
+}
+#frame div {
+border: 1px solid red;
+width: 200px;
+height: 200px;
+display: inline-block;
+flex-grow: 1;
+cursor: pointer;
+position: relative;
+}
+#frame span
+{
+position: absolute;
+    top: 10px;
+    left: 10px;
+font-size: 5rem;
+}
+#frame span img
+{
+width: 180px;
+height: 182px;
+}
+*
+{
+line-height: 0;
+}
+</style>
+<script type="text/javascript">
+var bang = [9]
+var ng = true;
+
+function winner(text)
+{
+	if (text == 'Lù thắng !!!!')
+	{
+		var i = 1;
+		var z = setInterval(function(){
+			$('#o'+i).html('<span><img src="https://vignette.wikia.nocookie.net/mcleodgaming/images/7/72/SSF2_Luffy.png/revision/latest?cb=20170620060401" /></span>');
+			i++;
+			if (i > 9)
+			{
+				clearInterval(z);
+				alert(text);
+			}
+		},100);
+	} else {
+		var i = 1;
+		var z = setInterval(function(){
+			$('#o'+i).html('<span><img src="https://juststickers.in/wp-content/uploads/2018/04/saitama.png" /></span>');
+			i++;
+			if (i > 9)
+			{
+				clearInterval(z);
+				alert(text);
+			}
+		},100);
+	}
+}
+
+function danh(x, obj)
+{	
+	y = x-1;
+	if (ng)
+	{
+		$(obj).append('<span><img src="https://vignette.wikia.nocookie.net/mcleodgaming/images/7/72/SSF2_Luffy.png/revision/latest?cb=20170620060401" /></span>');
+		bang[y] = 'x';
+	} else {
+		$(obj).append('<span><img src="https://juststickers.in/wp-content/uploads/2018/04/saitama.png" /></span>');
+		bang[y] = 'o';
+	}
+	if (bang[0] == 'x' && bang[1] == 'x' && bang[2] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[0] == 'x' && bang[4] == 'x' && bang[8] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[0] == 'x' && bang[3] == 'x' && bang[6] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[3] == 'x' && bang[4] == 'x' && bang[5] == 'x')
+		winner('Lù thắng !!!!');
+	else if(bang[6] == 'x' && bang[7] == 'x' && bang[8] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[1] == 'x' && bang[4] == 'x' && bang[7] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[2] == 'x' && bang[5] == 'x' && bang[8] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[2] == 'x' && bang[4] == 'x' && bang[6] == 'x')
+		winner('Lù thắng !!!!');
+	else if (bang[0] == 'o' && bang[1] == 'o' && bang[2] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[0] == 'o' && bang[4] == 'o' && bang[8] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[0] == 'o' && bang[3] == 'o' && bang[6] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[3] == 'o' && bang[4] == 'o' && bang[5] == 'o')
+		winner('Saitama thắng !!!!');
+	else if(bang[6] == 'o' && bang[7] == 'o' && bang[8] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[1] == 'o' && bang[4] == 'o' && bang[7] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[2] == 'o' && bang[5] == 'o' && bang[8] == 'o')
+		winner('Saitama thắng !!!!');
+	else if (bang[2] == 'o' && bang[4] == 'o' && bang[6] == 'o')
+		winner('Saitama thắng !!!!');
+	else {
+	var rong = false;
+		for (var i = 0; i < 9; i++)
+		{
+			if(bang[i] == null)
+			{
+				rong = true;
+				break;
+			}
+		}
+	if (!rong)
+		alert('Hoa');
+	}
+	
+	ng = !ng;
+}
+
+</script>
+<body> 
+<center>
+<div id="frame">
+<div id="o1" onclick="danh(1, this)"></div><div id="o2" onclick="danh(2, this)"></div><div id="o3" onclick="danh(3, this)"></div>
+<div id="o4" onclick="danh(4, this)"></div><div id="o5" onclick="danh(5, this)"></div><div id="o6" onclick="danh(6, this)"></div>
+<div id="o7" onclick="danh(7, this)"></div><div id="o8" onclick="danh(8, this)"></div><div id="o9" onclick="danh(9, this)"></div>
+</div>
+</center>
+</body>
+</html>
